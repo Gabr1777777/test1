@@ -6,6 +6,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap');
 
+        /* Variável central que controla o tema */
+        :root {
+            --main-color: #00f2ff; 
+        }
+
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             overflow: hidden; background-color: #000;
@@ -18,297 +23,238 @@
         /* --- TELA DE ENTRADA --- */
         #login-screen {
             position: fixed; z-index: 100; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); display: flex;
-            flex-direction: column; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1s ease;
+            background: radial-gradient(circle at center, #000814 0%, #000000 100%);
         }
+
         .login-box {
-            background: rgba(10, 10, 20, 0.8); padding: 40px; border-radius: 20px;
-            border: 2px solid rgba(0, 242, 255, 0.4); text-align: center;
-            backdrop-filter: blur(15px); box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+            background: rgba(5, 5, 15, 0.85); padding: 50px; border-radius: 20px;
+            border: 2px solid var(--main-color); text-align: center;
+            backdrop-filter: blur(15px); 
+            box-shadow: 0 0 50px var(--main-color);
+            transition: border-color 0.5s, box-shadow 0.5s;
         }
+
         input[type="password"] {
-            padding: 12px; border-radius: 8px; border: 1px solid #00f2ff;
-            outline: none; background: rgba(0, 0, 0, 0.8); color: #00f2ff;
+            padding: 12px; border-radius: 8px; border: 1px solid var(--main-color);
+            outline: none; background: rgba(0, 0, 0, 0.8); color: var(--main-color);
             margin-bottom: 20px; text-align: center; font-size: 1.1rem;
+            transition: 0.3s;
         }
 
         .btn-enter {
-            padding: 12px 40px; background: #00f2ff; color: #000;
+            padding: 12px 40px; background: var(--main-color); color: #000;
             border: none; border-radius: 8px; cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700; text-transform: uppercase;
-            box-shadow: 0 0 20px #00f2ff;
-            animation: neonPulse 1.5s infinite alternate;
+            font-family: 'Orbitron', sans-serif; font-weight: 700; text-transform: uppercase;
+            box-shadow: 0 0 20px var(--main-color);
             transition: 0.3s;
-            backface-visibility: hidden;
         }
 
-        @keyframes neonPulse {
-            from { box-shadow: 0 0 10px #00f2ff, 0 0 20px #00f2ff; filter: brightness(1); }
-            to { box-shadow: 0 0 30px #00f2ff, 0 0 50px #00f2ff; filter: brightness(1.4); }
+        /* --- BOTÕES DE FERRAMENTAS --- */
+        #ui-tools {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000001;
+            display: none; gap: 10px; align-items: center;
         }
 
-        .btn-enter:hover { animation: none; background: #fff; box-shadow: 0 0 60px #00f2ff; transform: scale(1.05); }
+        .tool-btn {
+            background: rgba(0, 0, 0, 0.9); border: 2px solid var(--main-color);
+            color: var(--main-color); padding: 10px 15px; border-radius: 5px;
+            cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 12px;
+            transition: 0.3s; font-weight: bold;
+        }
+        .tool-btn:hover { background: var(--main-color); color: #000; }
 
-        /* --- LAYOUT PRINCIPAL --- */
-        #main-profile {
-            display: none; opacity: 0; z-index: 50; position: relative;
-            display: flex; height: 100vh; padding: 40px; box-sizing: border-box;
-            gap: 40px; transition: opacity 1.5s;
+        #visit-counter {
+            background: rgba(0, 0, 0, 0.9); border: 1px solid var(--main-color);
+            padding: 6px 12px; border-radius: 4px; display: flex;
+            flex-direction: column; align-items: center; transition: 0.5s;
         }
 
+        /* --- SIDEBAR E CONTEÚDO --- */
         .sidebar {
             width: 320px; background: rgba(0, 0, 0, 0.85);
-            border: 1px solid rgba(0, 242, 255, 0.5); border-radius: 25px;
+            border: 1px solid var(--main-color); border-radius: 25px;
             padding: 25px; text-align: center; backdrop-filter: blur(10px);
-            height: fit-content; position: relative; z-index: 70;
+            transition: border-color 0.5s;
         }
+
         .profile-pic {
             width: 180px; height: 180px; border-radius: 20px;
-            border: 3px solid #00f2ff; box-shadow: 0 0 25px rgba(0, 242, 255, 0.6);
-            object-fit: cover; margin-bottom: 20px;
+            border: 3px solid var(--main-color); box-shadow: 0 0 25px var(--main-color);
+            object-fit: cover; margin-bottom: 20px; transition: 0.5s;
         }
 
         .animated-gradient-text {
-            background: linear-gradient(to right, #00f2ff, #ffffff, #00f2ff);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
+            background: linear-gradient(to right, var(--main-color), #ffffff, var(--main-color));
+            background-size: 200% auto; color: transparent;
+            -webkit-background-clip: text; background-clip: text;
             animation: gradientShift 3s linear infinite;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
-            display: inline-block;
         }
 
         @keyframes gradientShift { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 
         .menu-btn {
             width: 100%; padding: 15px; margin: 10px 0; background: transparent;
-            border: 2px solid #00f2ff; color: #00f2ff; cursor: pointer;
-            border-radius: 10px; font-family: 'Orbitron', sans-serif;
-            transition: 0.3s ease; font-size: 0.85rem;
+            border: 2px solid var(--main-color); color: var(--main-color); cursor: pointer;
+            border-radius: 10px; font-family: 'Orbitron', sans-serif; transition: 0.3s;
         }
-        .menu-btn:hover { background: rgba(0, 242, 255, 0.2); box-shadow: 0 0 20px rgba(0, 242, 255, 0.6); transform: scale(1.05); }
+        .menu-btn:hover { background: var(--main-color); color: #000; }
 
-        #visit-counter {
-            position: fixed; bottom: 20px; right: 20px; z-index: 1000001;
-            background: rgba(0, 0, 0, 0.9); border: 1px solid #00f2ff;
-            padding: 6px 12px; border-radius: 4px; display: none;
-            flex-direction: column; align-items: center;
-        }
-
-        /* --- SLIDER CENTRAL --- */
-        .slider-container {
-            flex: 1; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; position: relative;
-        }
-        .slideshow {
-            width: 100%; height: 400px; position: relative;
-            perspective: 1000px; display: flex; justify-content: center; align-items: center;
-        }
         .slide-img {
             position: absolute; width: 280px; height: 380px;
-            object-fit: cover; border-radius: 15px; border: 2px solid #00f2ff;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
-            transition: all 0.8s ease-in-out; opacity: 0;
+            object-fit: cover; border-radius: 15px; border: 2px solid var(--main-color);
+            box-shadow: 0 0 30px var(--main-color); transition: all 0.8s ease-in-out; opacity: 0;
         }
-        .slide-img.active { opacity: 1; transform: translateZ(100px); z-index: 5; }
-        .slide-img.prev { opacity: 0.4; transform: translateX(-250px) rotateY(25deg) scale(0.8); z-index: 2; }
-        .slide-img.next { opacity: 0.4; transform: translateX(250px) rotateY(-25deg) scale(0.8); z-index: 2; }
 
-        /* --- PLAYER --- */
-        .player-card { margin-top: 30px; background: rgba(5, 5, 15, 0.9); padding: 15px; border-radius: 15px; border: 1px solid #00f2ff; }
-        .track-info { font-size: 0.65rem; color: #00f2ff; margin-bottom: 10px; text-transform: uppercase; }
-        .progress-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-bottom: 15px; cursor: pointer; }
-        .progress-bar { width: 0%; height: 100%; background: #00f2ff; box-shadow: 0 0 8px #00f2ff; }
-        .volume-slider { -webkit-appearance: none; width: 60%; height: 3px; background: rgba(0, 242, 255, 0.3); outline: none; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: #00f2ff; border-radius: 50%; cursor: pointer; }
+        .player-card { margin-top: 30px; background: rgba(5, 5, 15, 0.9); padding: 15px; border-radius: 15px; border: 1px solid var(--main-color); transition: 0.5s; }
+        .track-info { font-size: 0.65rem; color: var(--main-color); margin-bottom: 10px; }
+        .progress-bar { width: 0%; height: 100%; background: var(--main-color); box-shadow: 0 0 8px var(--main-color); }
 
-        /* --- PAINEL DA DIREITA --- */
         #content-right {
             flex: 1; background: rgba(0, 0, 0, 0.85);
-            border: 1px solid rgba(0, 242, 255, 0.4); border-radius: 25px;
+            border: 1px solid var(--main-color); border-radius: 25px;
             padding: 30px; display: none; overflow-y: auto;
-            backdrop-filter: blur(10px); animation: fadeIn 0.5s ease;
             position: absolute; right: 40px; top: 40px; bottom: 40px; left: 400px; z-index: 60;
+            transition: border-color 0.5s;
         }
 
-        .header-right { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
-        .galeria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .galeria-grid img { width: 100%; border: 1px solid #00f2ff33; border-radius: 8px; transition: 0.4s ease; cursor: zoom-in; }
-        .galeria-grid img:hover { border-color: #00f2ff; transform: scale(1.08); box-shadow: 0 0 15px #00f2ff; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #main-profile { display: none; opacity: 0; z-index: 50; position: relative; display: flex; height: 100vh; padding: 40px; gap: 40px; transition: opacity 1.5s; }
     </style>
 </head>
 <body onload="init()">
 
     <canvas id="star-canvas"></canvas>
 
-    <div id="lightbox" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:15000; justify-content:center; align-items:center;">
-        <img id="lightbox-img" src="" style="max-width:90%; max-height:90%; border:2px solid #00f2ff; border-radius:10px;">
-    </div>
-
     <div id="login-screen">
         <div class="login-box">
-            <h2 style="color: #00f2ff;">LOGIN</h2>
+            <h2 style="color: var(--main-color);">LOGIN</h2>
             <input type="password" id="passInput" placeholder="SENHA">
             <br>
             <button class="btn-enter" onclick="checkPass()">Entrar</button>
         </div>
     </div>
 
-    <div id="visit-counter">
-        <span style="color: #00f2ff; font-size: 8px; letter-spacing: 1px;">VISITAS</span>
-        <span id="count-number" style="color: #fff; font-size: 18px; font-family: monospace;">...</span>
+    <div id="ui-tools">
+        <button class="tool-btn" onclick="proximaCor()">🎨 COR</button>
+        <div id="visit-counter">
+            <span style="color: var(--main-color); font-size: 8px; letter-spacing: 1px;">VISITAS</span>
+            <span id="count-number" style="color: #fff; font-size: 18px; font-family: monospace;">...</span>
+        </div>
     </div>
 
     <div id="main-profile">
         <div class="sidebar">
             <img src="https://i.imgur.com/Ip2Bdxv.png" class="profile-pic">
             <h2 class="animated-gradient-text" style="font-size: 1.2rem;">Gabriel Leandro</h2>
-            
             <button class="menu-btn" onclick="openRight('sobre')">SOBRE MIM</button>
             <button class="menu-btn" onclick="openRight('amigos')">AMIGOS</button>
             <button class="menu-btn" onclick="openRight('fotos')">FOTOS</button>
 
             <div class="player-card">
                 <div class="track-info" id="trackName">Carregando...</div>
-                <div class="progress-container" onclick="seek(event)">
+                <div class="progress-container" onclick="seek(event)" style="width:100%; height:4px; background:rgba(255,255,255,0.1); border-radius:2px; margin-bottom:15px; cursor:pointer;">
                     <div class="progress-bar" id="progBar"></div>
                 </div>
                 <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
-                    <button class="btn-enter" style="padding:5px 10px; animation: none;" onclick="prevTrack()">⏮</button>
-                    <button class="btn-enter" style="padding:5px 10px; animation: none;" id="playBtn" onclick="togglePlay()">⏸</button>
-                    <button class="btn-enter" style="padding:5px 10px; animation: none;" onclick="nextTrack()">⏭</button>
+                    <button class="btn-enter" style="padding:5px 10px;" onclick="prevTrack()">⏮</button>
+                    <button class="btn-enter" style="padding:5px 10px;" id="playBtn" onclick="togglePlay()">⏸</button>
+                    <button class="btn-enter" style="padding:5px 10px;" onclick="nextTrack()">⏭</button>
                 </div>
-                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.5" oninput="setVolume(this.value)">
                 <audio id="bgMusic" loop ontimeupdate="updateProgress()"></audio>
             </div>
         </div>
 
-        <div class="slider-container" id="center-slider">
-            <h3 class="animated-gradient-text" style="margin-bottom: 30px; letter-spacing: 5px;">PROJETOS & DESTAQUES</h3>
-            <div class="slideshow" id="slide-wrap"></div>
+        <div class="slider-container" id="center-slider" style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <h3 class="animated-gradient-text" style="margin-bottom:30px; letter-spacing:5px;">PROJETOS & DESTAQUES</h3>
+            <div class="slideshow" id="slide-wrap" style="width:100%; height:400px; position:relative; perspective:1000px; display:flex; justify-content:center; align-items:center;"></div>
         </div>
 
         <div id="content-right">
-            <div class="header-right">
-                <button class="btn-enter" style="padding:8px 15px; animation: none;" onclick="closeRight()">← VOLTAR</button>
-                <h2 id="right-title" style="border-bottom: 1px solid #00f2ff33; padding-bottom: 10px; width: 100%; margin-top: 20px;"></h2>
+            <div class="header-right" style="display:flex; flex-direction:column; align-items:flex-start; margin-bottom:20px;">
+                <button class="btn-enter" style="padding:8px 15px;" onclick="closeRight()">← VOLTAR</button>
+                <h2 id="right-title" class="animated-gradient-text" style="padding-bottom:10px; width:100%; margin-top:20px;"></h2>
             </div>
             <div id="right-body"></div>
         </div>
     </div>
 
     <script>
-        const ID_VISITAS = "perfil_gabriel_2026_unique"; 
-        let stars = [];
-        const fotosGaleria = [
-            "https://i.imgur.com/Ip2Bdxv.png", "https://i.imgur.com/7rKeKT8.png", 
-            "https://i.imgur.com/Bx7jSbA.png", "https://i.imgur.com/HhypJpx.png", 
-            "https://i.imgur.com/sc5uVGA.png", "https://i.imgur.com/ipooBns.png", 
-            "https://i.imgur.com/pTlq477.png"
-        ];
+        const ID_VISITAS = "perfil_gabriel_2026_unique";
+        // Ciclo de cores: Azul (padrão), Vermelho, Amarelo, Verde, Rosa, Laranja, Branco
+        const listaCores = ["#00f2ff", "#ff0000", "#ffff00", "#00ff00", "#ff00ff", "#ff8800", "#ffffff"];
+        let indiceCor = 0;
+
+        function proximaCor() {
+            indiceCor = (indiceCor + 1) % listaCores.length;
+            document.documentElement.style.setProperty('--main-color', listaCores[indiceCor]);
+        }
+
+        const fotosGaleria = ["https://i.imgur.com/Ip2Bdxv.png", "https://i.imgur.com/7rKeKT8.png", "https://i.imgur.com/Bx7jSbA.png", "https://i.imgur.com/HhypJpx.png", "https://i.imgur.com/sc5uVGA.png", "https://i.imgur.com/ipooBns.png", "https://i.imgur.com/pTlq477.png"];
         const playlist = [
             { name: "Bon Jovi - Livin on a Prayer", url: "https://www.dropbox.com/scl/fi/dxueil8ofydhnee9lvrk5/Bon-Jovi-livin-on-a-prayer.mp3.mp3?rlkey=06y21a3rhreta1elo2euhcnlr&st=cfea76fj&dl=1" },
             { name: "Desireless - Voyage Voyage", url: "https://www.dropbox.com/scl/fi/cqqhzkv1ll1p09z7qgylp/Desireless-voyage-voyage.mp3.mp3?rlkey=hscvkehw7n7vvgi2im4rwhom7&st=b5bj4smr&dl=1" },
-            { name: "Eminem - You Dont Know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=tawfqj0e&dl=1" },
-            { name: "Disturbed - Sound of Silence", url: "https://www.dropbox.com/scl/fi/2y9zhx5zjsdxg3zljc2f9/sound-of-silence.mp3.mp3?rlkey=88zg0td3loy40uxmcm9rnk1jt&st=hbwtvdvf&dl=1" }
+            { name: "Eminem - You Dont Know", url: "https://www.dropbox.com/scl/fi/4y0lc0fi24e9yavn17psv/Eminem-you-dont-know.mp3.mp3?rlkey=zicb6spgqe3pv0gqnz3xc24zo&st=tawfqj0e&dl=1" }
         ];
-        let currentTrack = 0;
+        
+        let stars = [], currentTrack = 0;
         const audio = document.getElementById('bgMusic');
 
-        function init() { 
-            startStars(); 
-            setupSlider();
-            audio.src = playlist[currentTrack].url;
-            document.getElementById('trackName').innerText = playlist[currentTrack].name;
-        }
+        function init() { startStars(); setupSlider(); audio.src = playlist[currentTrack].url; document.getElementById('trackName').innerText = playlist[currentTrack].name; }
 
         async function carregarContadores() {
             try {
                 const resV = await fetch(`https://api.counterapi.dev/v1/wrs-galeria/${ID_VISITAS}/up`);
                 const dataV = await resV.json();
                 document.getElementById('count-number').innerText = dataV.count || dataV.value;
-            } catch(e) { 
-                document.getElementById('count-number').innerText = "1"; 
-            }
+            } catch(e) { document.getElementById('count-number').innerText = "1"; }
         }
 
         function setupSlider() {
             const wrap = document.getElementById('slide-wrap');
-            fotosGaleria.forEach((src) => {
-                const img = document.createElement('img');
-                img.src = src; img.className = 'slide-img';
-                wrap.appendChild(img);
-            });
-            let idx = 0;
-            const slides = document.querySelectorAll('.slide-img');
-            function updateSlider() {
+            fotosGaleria.forEach(src => { const img = document.createElement('img'); img.src = src; img.className = 'slide-img'; wrap.appendChild(img); });
+            let idx = 0; const slides = document.querySelectorAll('.slide-img');
+            setInterval(() => {
                 slides.forEach(s => s.className = 'slide-img');
                 if(slides[idx]) {
-                    const prev = (idx - 1 + slides.length) % slides.length;
-                    const next = (idx + 1) % slides.length;
                     slides[idx].classList.add('active');
-                    slides[prev].classList.add('prev');
-                    slides[next].classList.add('next');
-                    idx = (idx + 1) % slides.length;
+                    slides[(idx-1+slides.length)%slides.length].classList.add('prev');
+                    slides[(idx+1)%slides.length].classList.add('next');
+                    idx = (idx+1)%slides.length;
                 }
-            }
-            updateSlider(); setInterval(updateSlider, 3000);
+            }, 3000);
         }
 
-        function togglePlay() {
-            if (audio.paused) { audio.play(); document.getElementById('playBtn').innerText = "⏸"; }
-            else { audio.pause(); document.getElementById('playBtn').innerText = "▶"; }
-        }
+        function togglePlay() { audio.paused ? (audio.play(), document.getElementById('playBtn').innerText="⏸") : (audio.pause(), document.getElementById('playBtn').innerText="▶"); }
         function nextTrack() { currentTrack = (currentTrack + 1) % playlist.length; loadTrack(); }
         function prevTrack() { currentTrack = (currentTrack - 1 + playlist.length) % playlist.length; loadTrack(); }
-        function loadTrack() {
-            audio.src = playlist[currentTrack].url;
-            document.getElementById('trackName').innerText = playlist[currentTrack].name;
-            audio.play(); document.getElementById('playBtn').innerText = "⏸";
-        }
+        function loadTrack() { audio.src = playlist[currentTrack].url; document.getElementById('trackName').innerText = playlist[currentTrack].name; audio.play(); document.getElementById('playBtn').innerText = "⏸"; }
         function updateProgress() { document.getElementById('progBar').style.width = (audio.currentTime / audio.duration) * 100 + "%"; }
         function seek(e) { audio.currentTime = (e.offsetX / e.currentTarget.offsetWidth) * audio.duration; }
-        function setVolume(v) { audio.volume = v; }
 
         function openRight(mode) {
-            const rightTitle = document.getElementById('right-title');
             const body = document.getElementById('right-body');
+            const title = document.getElementById('right-title');
             document.getElementById('content-right').style.display = "block";
             document.getElementById('center-slider').style.visibility = "hidden";
-            rightTitle.className = "animated-gradient-text";
-            if(mode === 'sobre') {
-                rightTitle.innerText = "SOBRE MIM";
-                body.innerHTML = `<div style="color:#00f2ff; line-height:1.8;">Vendo Gifs, Pcback, Pstyle e Fundos para XAT, DJ nas horas vagas - <br>Married Mnna (1013) ❤️</div>`;
-            } else if(mode === 'fotos') {
-                rightTitle.innerText = "MINHAS FOTOS";
-                let gridHTML = `<div class="galeria-grid">`;
-                fotosGaleria.forEach(src => { gridHTML += `<img src="${src}" onclick="zoom(this.src)">`; });
-                gridHTML += `</div>`;
-                body.innerHTML = gridHTML;
-            } else {
-                rightTitle.innerText = "LISTA DE AMIGOS";
-                body.innerHTML = `<div style="color:#00f2ff;">• Marbella<br>• Gold<br>• Venon<br>• Gothica<br>• Armando</div>`;
-            }
+            if(mode==='sobre') { title.innerText = "SOBRE MIM"; body.innerHTML = `<div style="color:var(--main-color)">Vendo Gifs, Pcback, Pstyle e Fundos para XAT - Married Mnna ❤️</div>`; }
+            else if(mode==='fotos') { title.innerText = "FOTOS"; body.innerHTML = fotosGaleria.map(s => `<img src="${s}" style="width:100px; margin:5px; border:1px solid var(--main-color)">`).join(''); }
+            else { title.innerText = "AMIGOS"; body.innerHTML = `<div style="color:var(--main-color)">• Marbella • Gold • Venon • Gothica</div>`; }
         }
-        function closeRight() { 
-            document.getElementById('content-right').style.display='none'; 
-            document.getElementById('center-slider').style.visibility = "visible";
-        }
-        function zoom(src) { document.getElementById('lightbox-img').src=src; document.getElementById('lightbox').style.display='flex'; }
+
+        function closeRight() { document.getElementById('content-right').style.display='none'; document.getElementById('center-slider').style.visibility="visible"; }
 
         function startStars() {
-            const canvas = document.getElementById('star-canvas');
-            const ctx = canvas.getContext('2d');
+            const canvas = document.getElementById('star-canvas'); const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<150; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*1.5, speed:Math.random()*0.2});
+            for(let i=0; i<200; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*2, speed:Math.random()*0.2, op:Math.random(), ts:Math.random()*0.05});
             function anim() {
-                ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="#fff";
-                stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x,s.y,s.size,0,Math.PI*2); ctx.fill(); s.y-=s.speed; if(s.y<0) s.y=canvas.height; });
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                stars.forEach(s => {
+                    s.op += s.ts; if(s.op>1 || s.op<0) s.ts=-s.ts;
+                    ctx.fillStyle=`rgba(255,255,255,${Math.abs(s.op)})`; ctx.beginPath(); ctx.arc(s.x,s.y,s.size,0,Math.PI*2); ctx.fill();
+                    s.y-=s.speed; if(s.y<0) s.y=canvas.height;
+                });
                 requestAnimationFrame(anim);
             } anim();
         }
@@ -319,11 +265,11 @@
                 setTimeout(() => {
                     document.getElementById('login-screen').style.display='none';
                     document.getElementById('main-profile').style.display='flex';
-                    document.getElementById('visit-counter').style.display='flex';
+                    document.getElementById('ui-tools').style.display='flex';
                     carregarContadores();
                     setTimeout(() => { document.getElementById('main-profile').style.opacity='1'; audio.play(); }, 50);
                 }, 1000);
-            } else { alert("Senha incorreta!"); }
+            } else alert("Senha incorreta!");
         }
     </script>
 </body>
